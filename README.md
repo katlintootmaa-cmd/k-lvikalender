@@ -6,7 +6,7 @@
 
 ## 2. Eesmärk
 
-Kuukülv aitab koduaednikul leida, mida ja millal Eesti kasvutingimustes külvata. Kasutaja näeb, milliseid taimi saab praegu avamaale külvata või ette kasvatada ning millised päevad on külviperioodi sees kuufaasi järgi soovitatud. Kuusoovitused on märgitud pärimuslikuna. Kasutaja saab külvitegevuse kalendrisse lisada, tellida meeldetuletuse ja kirja panna, mida ta tegelikult külvas.
+Kuukülv aitab koduaednikul leida, mida ja millal Eesti kasvutingimustes külvata. Kasutaja näeb, milliseid taimi saab praegu avamaale külvata või ette kasvatada ning millised päevad on külviperioodi sees kuufaasi järgi soovitatud. Kuusoovitused on märgitud pärimuslikuna. Kohalik ilmaprognoos aitab valida avamaale külvamiseks sobiva päeva. Kasutaja saab külvitegevuse kalendrisse lisada, tellida meeldetuletuse ja kirja panna, mida ta tegelikult külvas.
 
 ## 3. Sihtgrupp
 
@@ -23,6 +23,7 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 7. **Saa külvimeeldetuletus.** Lülita kalendrikirje juures meeldetuletus sisse. Telefon teavitab valitud külviperioodi alguspäeval või ühele päevale planeeritud külvi kuupäeval.
 8. **Pea külvipäevikut.** Märgi planeeritud tegevus tehtuks või lisa külv tagantjärele. Salvesta taim, külviviis, tegelik külvikuupäev ja soovi korral märkus. Kirjeid saab hiljem muuta või kustutada.
 9. **Kasuta külvikalendrit võrguühenduseta.** Vaata külviperioode ja kuusoovitusi andmetega kaetud päevadel ning lisa külvi- ja päevikukirjeid ka internetita.
+10. **Vaata kohalikku ilmaprognoosi.** Vali Eesti asula nime järgi. Kalendris näed tänast ilma ja seitsme päeva prognoosi koos õhutemperatuuri, sademete ja tuulega. Võimalikust öökülmast annab päeva vaates märku prognoosil põhinev märkus.
 
 ## 5. Tehnoloogiad
 
@@ -31,20 +32,22 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 | TypeScript | Rakenduse loogika, andmetüübid ja külvisoovituste arvutus. |
 | React Native ja Expo | Mobiilivaated ja arendus ühise koodibaasiga Androidile ja iOS-ile. |
 | JSON | Rakendusega kaasas olevad kultuuride külviperioodid, allikaviited ja kuufaaside andmed. |
-| SQLite (`expo-sqlite`) | Plaanide ja külvipäeviku kirjete salvestamine telefonis. [Expo SQLite dokumentatsioon](https://docs.expo.dev/versions/latest/sdk/sqlite/). |
+| SQLite (`expo-sqlite`) | Plaanide, külvipäeviku ja viimati laaditud ilmaprognoosi salvestamine telefonis. [Expo SQLite dokumentatsioon](https://docs.expo.dev/versions/latest/sdk/sqlite/). |
 | `expo-notifications` | Telefonis ajastatavad külvimeeldetuletused. [Expo teavituste dokumentatsioon](https://docs.expo.dev/versions/latest/sdk/notifications/). |
 | Git ja GitHub | Versioonihaldus ning projekti plaani hoidmine failis `README.md`. |
 | US Naval Observatory andmed | Nelja peamise kuufaasi ajahetkede allikas. [USNO kuufaaside andmed](https://aa.usno.navy.mil/data/MoonPhases). |
+| Open-Meteo | Asulaotsing ja ilmaprognoos. Kooliprojektis kasutame mitteärilist ligipääsu. [Prognoosi API](https://open-meteo.com/en/docs) · [Asulaotsingu API](https://open-meteo.com/en/docs/geocoding-api) · [Kasutustingimused](https://open-meteo.com/en/pricing). |
 
 ## 6. Teostusplaan
 
-1. Visanda vaated „Mida praegu külvata?“, kalender ja külvipäevik. Käi läbi näide, kus kasutaja leiab tomati ettekasvatuse külviperioodi, tellib meeldetuletuse ja märgib hiljem tegeliku külvikuupäeva.
+1. Visanda vaated „Mida praegu külvata?“, kalender ja külvipäevik. Käi läbi kaks näidet. Tomati ettekasvataja tellib meeldetuletuse ja märgib hiljem tegeliku külvikuupäeva. Avamaale redist külvav kasutaja vaatab enne kuupäeva valimist oma asula ilmaprognoosi.
 2. Kontrolli kuue kultuuri külviaegu Eesti kasvatusjuhenditest ning koosta allikaviidetega algandmestik. Lisa kuufaaside andmed ja määra nende kaetud periood.
 3. Loo Expo projekt ning ehita taimede nimekiri koos külviviisi filtriga ja kalendrivaade.
 4. Lisa külvisoovituste arvutus, päeva põhjendus ja teated puuduva kuufaasi või puuduva soovituse korral.
 5. Lisa külvitegevuste planeerimine, kohalikud meeldetuletused ja külvipäevik.
-6. Testi külviakna piire, kuufaasi vahetumist ja Eesti ajavööndit. Proovi Androidil ja iOS-il ka meeldetuletuste ajastamist ja tühistamist ning külvipäeviku kasutamist lennurežiimis.
-7. Paranda testimisel leitud vead ning lisa README-sse äpi käivitamise juhis.
+6. Ühenda asulaotsing ja ilmaprognoos Open-Meteoga. Lisa ennustuse kuvamine kalendris, viimase uuenduse kellaaeg ja salvestatud prognoosi kuvamine võrguvea korral.
+7. Testi külviakna piire, kuufaasi vahetumist ja Eesti ajavööndit. Proovi Androidil ja iOS-il meeldetuletuste ajastamist ja tühistamist, külvipäeviku kasutamist lennurežiimis ning ilmaprognoosi uuendamist ja asula vahetamist.
+8. Paranda testimisel leitud vead ning lisa README-sse äpi käivitamise juhis.
 
 ## 7. Valmisoleku kriteeriumid
 
@@ -55,6 +58,7 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 - Kasutaja saab külviperioodi kalendrisse lisada. Teavitusloa korral saabub üks meeldetuletus valitud perioodi alguspäeval. Kuupäeva muutmisel ajastatakse teavitus ümber ja kirje kustutamisel see tühistatakse. Loast keeldumisel jääb plaan kalendrisse ning äpp näitab, et teavitus pole aktiivne.
 - Kasutaja saab külvipäevikusse lisada tegeliku külvikuupäeva, mis võib erineda plaanitud kuupäevast. Tehtud kirje on kalendris äratuntav ja jääb alles pärast äpi taaskäivitamist.
 - Lennurežiimis saab valida kultuuri, vaadata kalendrit, avada kaetud päeva põhjenduse ja teha päevikukande. Kui kuufaasiandmed puuduvad, jääb külviperiood nähtavale ja äpp kuvab selle kohta selge teate.
+- Kui kasutaja valib asula, kuvab äpp seitsme päeva prognoosi selle asula kohta Eesti aja järgi. Kasutaja näeb, millal äpp ilmaandmed viimati laadis, ning saab neid käsitsi uuendada. Võrguvea korral näitab äpp valitud asula ja kuupäeva kohta salvestatud ilmaandmeid märkega „Viimati laaditud prognoos“. Kui selle päeva andmed puuduvad, kuvatakse sellekohane teade. Külvikalender ja päevik töötavad edasi.
 - README-s on juhis, mille järgi saab teine inimene projekti käivitada.
 
 ## Arenduse märkmed
@@ -71,6 +75,11 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 - Kasuta äpi enda kalendrit. Kuva külvisoovitused, plaanitud tegevused ja tehtud külvid eri tekstisiltidega.
 - Küsi teavitusluba siis, kui kasutaja meeldetuletuse sisse lülitab. Ajasta teavitus telefonis ja tühista ootel meeldetuletus, kui tegevus märgitakse tehtuks. Kui kuupäev on möödunud, kuva plaan kalendris ning lase kasutajal vajaduse korral valida uus kuupäev.
 - Salvesta külvipäeviku kuupäev kasutaja valitud kalendripäevana. Plaani tehtuks märkimisel paku vaikimisi tänast kuupäeva ja luba seda enne salvestamist muuta.
+
+### Ilmaprognoos
+
+- Salvesta valitud asula ja selle koordinaadid. Küsi prognoosi äpi avamisel ja esiplaanile naasmisel siis, kui viimasest edukast laadimisest on möödunud vähemalt tund, ning asula vahetamisel või käsitsi uuendamisel. Seo salvestatud prognoos asula ja kuupäevadega.
+- Kuva võimalik öökülm siis, kui kohaliku öö tunniprognoos näitab õhutemperatuuri 0 °C või alla selle. See on kohalikul prognoosil põhinev märkus. Külviaken ja kuufaasi soovitus jäävad kalendris nähtavale ka siis, kui valitud kuupäev jääb prognoosiperioodist välja.
 
 ### Agendid
 
