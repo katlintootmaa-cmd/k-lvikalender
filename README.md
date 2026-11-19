@@ -6,7 +6,7 @@
 
 ## 2. Eesmärk
 
-Kuukülv aitab koduaednikul leida, millal valitud taime külvata. Ühes vaates saab näha Eesti kasvutingimustele sobivat külviperioodi ning selle sees kuufaasi järgi soovitatud päevi. Kuusoovitused on märgitud pärimuslikuna. Kasutaja näeb ka külviperioodi ennast ja soovituse põhjendust.
+Kuukülv aitab koduaednikul leida, mida ja millal Eesti kasvutingimustes külvata. Kasutaja näeb, milliseid taimi saab praegu avamaale külvata või ette kasvatada ning millised päevad on külviperioodi sees kuufaasi järgi soovitatud. Kuusoovitused on märgitud pärimuslikuna. Kasutaja saab külvitegevuse kalendrisse lisada, tellida meeldetuletuse ja kirja panna, mida ta tegelikult külvas.
 
 ## 3. Sihtgrupp
 
@@ -14,12 +14,15 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 
 ## 4. Funktsionaalsus
 
-1. **Vali kultuur.** Esimesse versiooni plaanin lisada redise, porgandi, herne ja aedsalati.
-2. **Vali külviviis.** Vaata avamaale külvi või ettekasvatuse aega, kui valitud taime kasvatamisjuhis seda viisi toetab.
+1. **Vaata, mida külvata.** Vaade „Mida praegu külvata?“ näitab taimi, mille külviperiood on täna või valitud kuupäeval avatud. Esimesse versiooni plaanin lisada redise, porgandi, herne, aedsalati, tomati ja kurgi.
+2. **Vali külviviis.** Filtreeri soovitusi avamaale külvi või ettekasvatuse järgi. Tomati ja kurgi puhul saab vaadata ettekasvatuseks mõeldud külviperioode.
 3. **Vaata külviperioodi.** Kalender kuvab algus- ja lõpukuupäeva ning vajaduse korral märkuse mulla temperatuuri või öökülmaohu kohta.
 4. **Vaata kuufaase.** Kalender märgib noorkuu, esimese veerandi, täiskuu ja viimase veerandi kuupäeva Eesti aja järgi.
 5. **Leia järgmine kuufaasi järgi soovitatud külvipäev.** Rakendus tõstab sobivad päevad külviperioodis esile. Päeva avamisel näeb kasutaja kuufaasi ja soovituse põhjendust.
-6. **Kasuta külvikalendrit võrguühenduseta.** Rakendusega kaasas olevad andmed võimaldavad vaadata külviperioode ja leida kuusoovitusi andmetega kaetud päevadel.
+6. **Lisa külv kalendrisse.** Salvesta valitud taime külvitegevus kuupäeva või terve külviperioodina äpi kalendrisse.
+7. **Saa külvimeeldetuletus.** Lülita kalendrikirje juures meeldetuletus sisse. Telefon teavitab valitud külviperioodi alguspäeval või ühele päevale planeeritud külvi kuupäeval.
+8. **Pea külvipäevikut.** Märgi planeeritud tegevus tehtuks või lisa külv tagantjärele. Salvesta taim, külviviis, tegelik külvikuupäev ja soovi korral märkus. Kirjeid saab hiljem muuta või kustutada.
+9. **Kasuta külvikalendrit võrguühenduseta.** Vaata külviperioode ja kuusoovitusi andmetega kaetud päevadel ning lisa külvi- ja päevikukirjeid ka internetita.
 
 ## 5. Tehnoloogiad
 
@@ -28,25 +31,30 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 | TypeScript | Rakenduse loogika, andmetüübid ja külvisoovituste arvutus. |
 | React Native ja Expo | Mobiilivaated ja arendus ühise koodibaasiga Androidile ja iOS-ile. |
 | JSON | Rakendusega kaasas olevad kultuuride külviperioodid, allikaviited ja kuufaaside andmed. |
+| SQLite (`expo-sqlite`) | Plaanide ja külvipäeviku kirjete salvestamine telefonis. [Expo SQLite dokumentatsioon](https://docs.expo.dev/versions/latest/sdk/sqlite/). |
+| `expo-notifications` | Telefonis ajastatavad külvimeeldetuletused. [Expo teavituste dokumentatsioon](https://docs.expo.dev/versions/latest/sdk/notifications/). |
 | Git ja GitHub | Versioonihaldus ning projekti plaani hoidmine failis `README.md`. |
 | US Naval Observatory andmed | Nelja peamise kuufaasi ajahetkede allikas. [USNO kuufaaside andmed](https://aa.usno.navy.mil/data/MoonPhases). |
 
 ## 6. Teostusplaan
 
-1. Visanda kultuuri valiku, kalendri ja päeva detailvaate ekraanid.
-2. Kontrolli nelja kultuuri külviaegu Eesti kasvatusjuhenditest ning koosta allikaviidetega algandmestik. Lisa kuufaaside andmed ja määra nende kaetud periood.
-3. Loo Expo projekt ning ehita kultuuri valik ja kalendrivaade.
+1. Visanda vaated „Mida praegu külvata?“, kalender ja külvipäevik. Käi läbi näide, kus kasutaja leiab tomati ettekasvatuse külviperioodi, tellib meeldetuletuse ja märgib hiljem tegeliku külvikuupäeva.
+2. Kontrolli kuue kultuuri külviaegu Eesti kasvatusjuhenditest ning koosta allikaviidetega algandmestik. Lisa kuufaaside andmed ja määra nende kaetud periood.
+3. Loo Expo projekt ning ehita taimede nimekiri koos külviviisi filtriga ja kalendrivaade.
 4. Lisa külvisoovituste arvutus, päeva põhjendus ja teated puuduva kuufaasi või puuduva soovituse korral.
-5. Testi külviakna piire, kuufaasi vahetumist ja Eesti ajavööndit. Proovi kogu kasutajateekonda Androidil ja iOS-il, sealhulgas lennurežiimis.
-6. Paranda testimisel leitud vead ning lisa README-sse äpi käivitamise juhis.
+5. Lisa külvitegevuste planeerimine, kohalikud meeldetuletused ja külvipäevik.
+6. Testi külviakna piire, kuufaasi vahetumist ja Eesti ajavööndit. Proovi Androidil ja iOS-il ka meeldetuletuste ajastamist ja tühistamist ning külvipäeviku kasutamist lennurežiimis.
+7. Paranda testimisel leitud vead ning lisa README-sse äpi käivitamise juhis.
 
 ## 7. Valmisoleku kriteeriumid
 
 - Äpp käivitub Androidil ja iOS-il ning põhivaated on eestikeelsed.
-- Kõigi nelja kultuuri jaoks saab valida vähemalt ühe külviviisi ja näha allikaviitega külviperioodi.
+- Kõigi kuue kultuuri jaoks saab valida vähemalt ühe külviviisi ja näha allikaviitega külviperioodi. Valitud kuupäeva soovitused vastavad külviviisi filtrile ning tomatit ja kurki saab vaadata ettekasvatuse filtriga.
 - Kalendri nelja peamise kuufaasi kuupäevad ühtivad kontrollnäidetes USNO aega Eesti ajavööndisse teisendades saadud kuupäevadega.
 - Iga esile tõstetud päev jääb valitud külviperioodi ja vastab kuufaasi reeglile. Päeva detailvaade selgitab, miks päev sobib, ja märgib soovituse pärimuslikuna.
-- Lennurežiimis saab valida kultuuri, vaadata kalendrit ja avada kaetud päeva põhjenduse. Kui kuufaasiandmed puuduvad, jääb külviperiood nähtavale ja äpp kuvab selle kohta selge teate.
+- Kasutaja saab külviperioodi kalendrisse lisada. Teavitusloa korral saabub üks meeldetuletus valitud perioodi alguspäeval. Kuupäeva muutmisel ajastatakse teavitus ümber ja kirje kustutamisel see tühistatakse. Loast keeldumisel jääb plaan kalendrisse ning äpp näitab, et teavitus pole aktiivne.
+- Kasutaja saab külvipäevikusse lisada tegeliku külvikuupäeva, mis võib erineda plaanitud kuupäevast. Tehtud kirje on kalendris äratuntav ja jääb alles pärast äpi taaskäivitamist.
+- Lennurežiimis saab valida kultuuri, vaadata kalendrit, avada kaetud päeva põhjenduse ja teha päevikukande. Kui kuufaasiandmed puuduvad, jääb külviperiood nähtavale ja äpp kuvab selle kohta selge teate.
 - README-s on juhis, mille järgi saab teine inimene projekti käivitada.
 
 ## Arenduse märkmed
@@ -57,6 +65,12 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 2. Tõsta külviaknas esile kuufaasiga sobivad kalendripäevad. Esimese versiooni pärimusreegel seob maapealse saagiga kultuurid kasvava kuuga ja maa-aluse saagiga kultuurid kahaneva kuuga. Üleminekupäeva määramiseks kasutab äpp oma kokkulepet ja kontrollib kuufaasi kell 12.00 Eesti ajas. Kasvav periood algab noorkuu täpsel hetkel ja lõpeb täiskuu hetkel. Kahanev periood algab täiskuu täpsel hetkel ja lõpeb järgmise noorkuu hetkel. Piirihetk kuulub algavasse perioodi. [Pärimusreegli allikas](https://www.almanac.com/planting-by-the-moon).
 3. Näita põhjendust, näiteks „Kuu järgi soovitatud külvipäev. Päev jääb külviaknasse ja kuu on kasvav.“ Lisa lühike selgitus, et kuu järgi külvamine on pärimus. Teaduskirjanduse ülevaade ei leidnud usaldusväärset alust kuufaaside järgi külvamisele saagi parandamiseks. [Mayoral jt, 2020](https://doi.org/10.3390/agronomy10070955).
 4. Hoia faasihetked UTC-s ja kuva need ajavööndis `Europe/Tallinn`. Kuva terve külviaken koos algus- ja lõpupäevaga ka siis, kui faasiandmed katavad ainult osa sellest. Anna kuusoovitusi kaetud päevadele ja märgi ülejäänud päevadel andmete puudumine. Päev on kaetud, kui selle kohalik keskpäev jääb teadaolevasse järjestikuste noor- ja täiskuu vahemikku. Kui kogu külviaken on kaetud ja ükski päev ei sobi, ütle, et sel perioodil kuu järgi soovitatud päevi ei ole. [USNO kuufaaside andmestik](https://aa.usno.navy.mil/data/MoonPhases).
+
+### Isiklik külvikalender
+
+- Kasuta äpi enda kalendrit. Kuva külvisoovitused, plaanitud tegevused ja tehtud külvid eri tekstisiltidega.
+- Küsi teavitusluba siis, kui kasutaja meeldetuletuse sisse lülitab. Ajasta teavitus telefonis ja tühista ootel meeldetuletus, kui tegevus märgitakse tehtuks. Kui kuupäev on möödunud, kuva plaan kalendris ning lase kasutajal vajaduse korral valida uus kuupäev.
+- Salvesta külvipäeviku kuupäev kasutaja valitud kalendripäevana. Plaani tehtuks märkimisel paku vaikimisi tänast kuupäeva ja luba seda enne salvestamist muuta.
 
 ### Agendid
 
