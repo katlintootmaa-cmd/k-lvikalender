@@ -299,7 +299,9 @@ function AppContent() {
           </View>
           {!!dayEntries.length && <View style={s.card}>
             <Text accessibilityRole="header" style={s.subheading}>Selle päeva kirjed</Text>
-            {dayEntries.map((entry) => <Text key={entry.id} style={s.body}>{CROPS.find((item) => item.id === entry.cropId)?.name} · {entry.kind === 'done' ? 'Külvatud' : 'Plaanis'}</Text>)}
+            {dayEntries.map((entry) => <Text key={entry.id} style={s.body}>
+              {[CROPS.find((item) => item.id === entry.cropId)?.name, entry.variety, entry.kind === 'done' ? 'Külvatud' : 'Plaanis'].filter(Boolean).join(' · ')}
+            </Text>)}
             <Button title="Ava päevik" onPress={() => setTab('journal')} />
           </View>}
         </>}
@@ -322,6 +324,7 @@ function AppContent() {
                     <View style={s.thumb}><Text style={s.emoji}>{plant.icon}</Text></View>
                     <View style={s.grow}>
                       <Text style={s.strong}>{plant.name} · {METHOD[plant.method]}</Text>
+                      {!!entry.variety && <Text style={s.small}>Sort · {entry.variety}</Text>}
                       <Text style={s.small}>{formatDay(entry.day, { day: 'numeric', month: 'long', year: 'numeric' })}{entry.end ? ` – ${formatDay(entry.end)}` : ''}</Text>
                     </View>
                   </View>

@@ -34,7 +34,7 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 5. **Leia järgmine kuufaasi järgi soovitatud külvipäev.** Rakendus tõstab sobivad päevad külviperioodis esile. Päeva avamisel näeb kasutaja kuufaasi ja soovituse põhjendust.
 6. **Lisa külv kalendrisse.** Salvesta valitud taime külvitegevus kuupäeva või terve külviperioodina äpi kalendrisse.
 7. **Saa külvimeeldetuletus.** Lülita kalendrikirje juures meeldetuletus sisse. Telefon teavitab valitud külviperioodi alguspäeval või ühele päevale planeeritud külvi kuupäeval.
-8. **Pea külvipäevikut.** Märgi planeeritud tegevus tehtuks või lisa külv tagantjärele. Salvesta taim, külviviis, tegelik külvikuupäev ja soovi korral märkus. Kirjeid saab hiljem muuta või kustutada.
+8. **Pea külvipäevikut.** Märgi planeeritud tegevus tehtuks või lisa külv tagantjärele. Vali taim ja tegelik külvikuupäev ning lisa soovi korral sordi nimi ja vabas vormis täpsustused, näiteks seemnete arv või külvikoht. Sordi ja täpsustused saab lisada juba külviplaani juurde. Kirjeid saab hiljem muuta või kustutada.
 9. **Kasuta külvikalendrit võrguühenduseta.** Vaata külviperioode ja kuusoovitusi andmetega kaetud päevadel ning lisa külvi- ja päevikukirjeid ka internetita.
 10. **Vaata kohalikku ilmaprognoosi.** Vali Eesti asula nime järgi. Kalendris näed tänast ilma ja seitsme päeva prognoosi koos õhutemperatuuri, sademete ja tuulega. Võimalikust öökülmast annab päeva vaates märku prognoosil põhinev märkus.
 
@@ -69,7 +69,7 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 - Kalendri nelja peamise kuufaasi kuupäevad ühtivad kontrollnäidetes USNO aega Eesti ajavööndisse teisendades saadud kuupäevadega.
 - Iga esile tõstetud päev jääb valitud külviperioodi ja vastab kuufaasi reeglile. Päeva detailvaade selgitab, miks päev sobib, ja märgib soovituse pärimuslikuna.
 - Kasutaja saab külviperioodi kalendrisse lisada. Teavitusloa korral saabub üks meeldetuletus valitud perioodi alguspäeval. Kuupäeva muutmisel ajastatakse teavitus ümber ja kirje kustutamisel see tühistatakse. Loast keeldumisel jääb plaan kalendrisse ning äpp näitab, et teavitus pole aktiivne.
-- Kasutaja saab külvipäevikusse lisada tegeliku külvikuupäeva, mis võib erineda plaanitud kuupäevast. Tehtud kirje on kalendris äratuntav ja jääb alles pärast äpi taaskäivitamist.
+- Kasutaja saab külvipäevikusse lisada tegeliku külvikuupäeva, mis võib erineda plaanitud kuupäevast. Külviplaani tehtuks märkimisel kanduvad sordiväli ja täpsustused päevikusse ning neid saab muuta. Tehtud kirje on kalendris äratuntav ja jääb alles pärast äpi taaskäivitamist.
 - Lennurežiimis saab valida kultuuri, vaadata kalendrit, avada kaetud päeva põhjenduse ja teha päevikukande. Kui kuufaasiandmed puuduvad, jääb külviperiood nähtavale ja äpp kuvab selle kohta selge teate.
 - Kui kasutaja valib asula, kuvab äpp seitsme päeva prognoosi selle asula kohta Eesti aja järgi. Kasutaja näeb, millal äpp ilmaandmed viimati laadis, ning saab neid käsitsi uuendada. Võrguvea korral näitab äpp valitud asula ja kuupäeva kohta salvestatud ilmaandmeid märkega „Viimati laaditud prognoos“. Kui selle päeva andmed puuduvad, kuvatakse sellekohane teade. Külvikalender ja päevik töötavad edasi.
 - README-s on juhis, mille järgi saab teine inimene projekti käivitada.

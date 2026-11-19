@@ -7,6 +7,7 @@ export type Entry = {
   day: Day;
   end?: Day;
   plannedDay?: Day;
+  variety?: string;
   note: string;
   reminder: boolean;
 };

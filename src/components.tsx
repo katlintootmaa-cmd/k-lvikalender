@@ -127,6 +127,7 @@ export function EntryEditor({ request, today, close, save }: {
   const [crop, setCrop] = useState<Crop>(CROPS.find(({ id }) => id === request.cropId) ?? CROPS[0]);
   const [day, setDay] = useState(request.day);
   const [end, setEnd] = useState(request.kind === 'planned' ? existing?.end ?? '' : '');
+  const [variety, setVariety] = useState(existing?.variety ?? '');
   const [note, setNote] = useState(existing?.note ?? '');
   const [reminder, setReminder] = useState(request.kind === 'planned' && !!existing?.reminder);
   const [error, setError] = useState('');
@@ -150,7 +151,7 @@ export function EntryEditor({ request, today, close, save }: {
     try {
       await save({
         kind: request.kind, cropId: crop.id, day: actualDay, end: isPlan ? lastDay || undefined : undefined,
-        note: note.trim(), reminder: isPlan && reminder,
+        variety: variety.trim() || undefined, note: note.trim(), reminder: isPlan && reminder,
         plannedDay: request.completing ? existing?.day : existing?.plannedDay,
       }, existing?.id);
     } catch {
@@ -162,6 +163,11 @@ export function EntryEditor({ request, today, close, save }: {
   return <Sheet title={isPlan ? 'Planeeri külv' : 'Märgi külvatuks'} close={close}>
     <Choice value={crop.id} options={CROPS.map(({ id, name }) => [id, name] as const)} onChange={(id) => setCrop(CROPS.find((item) => item.id === id) ?? crop)} />
     <Text style={s.small}>{METHOD[crop.method]}</Text>
+    <View style={s.stack}>
+      <Text style={s.strong}>Sort (valikuline)</Text>
+      <TextInput accessibilityLabel="Sort" style={s.field} value={variety} onChangeText={setVariety}
+        placeholder="Sordi nimi" placeholderTextColor={color.muted} maxLength={100} />
+    </View>
     {isPlan && <Button icon="calendar-outline" title={`Vali külviperiood · ${formatDay(window.start)} – ${formatDay(window.end)}`}
       onPress={() => { setDay(window.start); setEnd(window.end); }} />}
     <View style={s.stack}>
@@ -174,8 +180,11 @@ export function EntryEditor({ request, today, close, save }: {
       <TextInput accessibilityLabel="Perioodi lõpp" style={s.field} value={end} onChangeText={setEnd}
         placeholder="AAAA-KK-PP" placeholderTextColor={color.muted} autoCapitalize="none" maxLength={10} />
     </View>}
-    <TextInput accessibilityLabel="Märkus" style={s.field} value={note} onChangeText={setNote}
-      placeholder="Märkus (valikuline)" placeholderTextColor={color.muted} multiline maxLength={400} />
+    <View style={s.stack}>
+      <Text style={s.strong}>Täpsustused (valikuline)</Text>
+      <TextInput accessibilityLabel="Täpsustused" style={s.field} value={note} onChangeText={setNote}
+        placeholder="Näiteks seemnete arv või külvikoht" placeholderTextColor={color.muted} multiline maxLength={400} />
+    </View>
     {isPlan && remindersAvailable && <View style={s.between}>
       <Text style={[s.body, s.grow]}>Meeldetuletus kell 9 Eesti aja järgi</Text>
       <Switch accessibilityLabel="Külvimeeldetuletus" value={reminder} onValueChange={setReminder} trackColor={{ true: color.green }} />
