@@ -4,6 +4,19 @@
 
 **Kuukülv** on eestikeelne külvikalender Androidi ja iOS-i telefonidele.
 
+### Prototüübi käivitamine
+
+```sh
+npm ci
+npm start
+```
+
+Ava Expo QR-kood telefonis, kasutades projektiga ühilduvat Expo Go versiooni. Arvutis saab vaateid proovida käsuga `npm run web`. Veebivaade salvestab päeviku brauserisse ja telefoniteavitusi saab proovida Androidi või iOS-i äpis. Internetiühendust vajavad asulaotsing ja ilmaprognoosi uuendamine.
+
+Kalendris on 2025.–2031. aasta kuufaasid. Külviaknad on Eesti kevadisteks tingimusteks mõeldud ligikaudsed ajavahemikud. Meeldetuletus on vaikimisi välja lülitatud ja sisselülitamisel ajastatakse see plaanitud päevale kella 9.00 Eesti aja järgi.
+
+Arenduskontrollid käivituvad käskudega `npm run typecheck` ja `npm test`.
+
 ## 2. Eesmärk
 
 Kuukülv aitab koduaednikul leida, mida ja millal Eesti kasvutingimustes külvata. Kasutaja näeb, milliseid taimi saab praegu avamaale külvata või ette kasvatada ning millised päevad on külviperioodi sees kuufaasi järgi soovitatud. Kuusoovitused on märgitud pärimuslikuna. Kohalik ilmaprognoos aitab valida avamaale külvamiseks sobiva päeva. Kasutaja saab külvitegevuse kalendrisse lisada, tellida meeldetuletuse ja kirja panna, mida ta tegelikult külvas.
