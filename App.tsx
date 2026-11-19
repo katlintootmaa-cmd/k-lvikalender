@@ -4,6 +4,7 @@ import * as Crypto from 'expo-crypto';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, AppState, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { CareView } from './src/CareView';
 import {
   CROPS, METHOD, PHASE_NAMES, TIME_ZONE, TRADITION, USNO, changeMonth, formatDay, inSeason, localDay,
   lunarPeriod, monthGrid, moonEvent, nextSuggestedDay, nextWindow, recommended, sowingWindow, tallinnTime, type Crop, type Day, type Method,
@@ -19,6 +20,7 @@ import { DEFAULT_PLACE, WEATHER_SOURCE, weatherLabel, type Place } from './src/w
 const tabs = [
   { id: 'today', name: 'Täna', icon: 'sunny-outline' },
   { id: 'calendar', name: 'Kalender', icon: 'calendar-outline' },
+  { id: 'care', name: 'Hooldus', icon: 'leaf-outline' },
   { id: 'journal', name: 'Päevik', icon: 'book-outline' },
 ] as const;
 type Tab = typeof tabs[number]['id'];
@@ -280,6 +282,7 @@ function AppContent() {
               : <Text style={s.small}>Selles külviperioodis pole alates valitud päevast kuusoovitust.</Text>}
             {day > cropWindow.end && <Button title={`Järgmine külviperiood · ${formatDay(upcomingWindow.start, { day: 'numeric', month: 'short', year: 'numeric' })}`} onPress={() => setDay(upcomingWindow.start)} />}
             <View style={s.wrap}><Source title="Külviaja allikas" url={crop.source} /><Source title="Kuufaaside andmed" url={USNO} /><Source title="Külvipärimus" url={TRADITION} /></View>
+            <Button title="Hooldus sellel päeval" icon="leaf-outline" onPress={() => setTab('care')} />
           </View>
           <View style={s.card}>
             <Text accessibilityRole="header" style={s.subheading}>Ilm{place ? ` · ${place.name}` : ''}</Text>
@@ -305,6 +308,7 @@ function AppContent() {
             <Button title="Ava päevik" onPress={() => setTab('journal')} />
           </View>}
         </>}
+        {tab === 'care' && <CareView crop={crop} setCrop={setCrop} day={day} today={today} selectDay={setDay} openCalendar={() => setTab('calendar')} />}
         {tab === 'journal' && <>
           <Text accessibilityRole="header" style={s.heading}>Külvipäevik</Text>
           <View style={s.wrap}>

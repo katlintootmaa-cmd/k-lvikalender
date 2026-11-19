@@ -37,6 +37,8 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 8. **Pea külvipäevikut.** Märgi planeeritud tegevus tehtuks või lisa külv tagantjärele. Vali taim ja tegelik külvikuupäev ning lisa soovi korral sordi nimi ja vabas vormis täpsustused, näiteks seemnete arv või külvikoht. Sordi ja täpsustused saab lisada juba külviplaani juurde. Kirjeid saab hiljem muuta või kustutada.
 9. **Kasuta külvikalendrit võrguühenduseta.** Vaata külviperioode ja kuusoovitusi andmetega kaetud päevadel ning lisa külvi- ja päevikukirjeid ka internetita.
 10. **Vaata kohalikku ilmaprognoosi.** Vali Eesti asula nime järgi. Kalendris näed tänast ilma ja seitsme päeva prognoosi koos õhutemperatuuri, sademete ja tuulega. Võimalikust öökülmast annab päeva vaates märku prognoosil põhinev märkus.
+11. **Vaata taimehooldust külvist saagini.** Vali taim ja loe, millal väetada ning mida jälgida kasvuperioodi eri etappides. Potitomati ja potikurgi puhul saab viimase väetamise järgi arvutada järgmise võimaliku ajavahemiku.
+12. **Vaata aiatöid kuu järgi.** Kontrolli seitsme päeva kaupa, millised päevad sobivad pärimuse järgi tomati ladva eemaldamiseks, harvendamiseks, rohimiseks või ümberistutamiseks. Tomati puhul näitab äpp ka seda, millise kasvukujuga taimel ja mis kasvufaasis ladva eemaldamist kaaluda.
 
 ## 5. Tehnoloogiad
 
@@ -59,8 +61,9 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 4. Lisa külvisoovituste arvutus, päeva põhjendus ja teated puuduva kuufaasi või puuduva soovituse korral.
 5. Lisa külvitegevuste planeerimine, kohalikud meeldetuletused ja külvipäevik.
 6. Ühenda asulaotsing ja ilmaprognoos Open-Meteoga. Lisa ennustuse kuvamine kalendris, viimase uuenduse kellaaeg ja salvestatud prognoosi kuvamine võrguvea korral.
-7. Testi külviakna piire, kuufaasi vahetumist ja Eesti ajavööndit. Proovi Androidil ja iOS-il meeldetuletuste ajastamist ja tühistamist, külvipäeviku kasutamist lennurežiimis ning ilmaprognoosi uuendamist ja asula vahetamist.
-8. Paranda testimisel leitud vead ning lisa README-sse äpi käivitamise juhis.
+7. Lisa kuue taime hooldusjuhised, potitaime väetamisvahe arvutus ja seitsme päeva kuuvaade aiatööde jaoks.
+8. Testi külviakna piire, kuufaasi vahetumist ja Eesti ajavööndit. Proovi Androidil ja iOS-il meeldetuletuste ajastamist ja tühistamist, külvipäeviku kasutamist lennurežiimis ning ilmaprognoosi uuendamist ja asula vahetamist.
+9. Paranda testimisel leitud vead ning lisa README-sse äpi käivitamise juhis.
 
 ## 7. Valmisoleku kriteeriumid
 
@@ -72,6 +75,8 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 - Kasutaja saab külvipäevikusse lisada tegeliku külvikuupäeva, mis võib erineda plaanitud kuupäevast. Külviplaani tehtuks märkimisel kanduvad sordiväli ja täpsustused päevikusse ning neid saab muuta. Tehtud kirje on kalendris äratuntav ja jääb alles pärast äpi taaskäivitamist.
 - Lennurežiimis saab valida kultuuri, vaadata kalendrit, avada kaetud päeva põhjenduse ja teha päevikukande. Kui kuufaasiandmed puuduvad, jääb külviperiood nähtavale ja äpp kuvab selle kohta selge teate.
 - Kui kasutaja valib asula, kuvab äpp seitsme päeva prognoosi selle asula kohta Eesti aja järgi. Kasutaja näeb, millal äpp ilmaandmed viimati laadis, ning saab neid käsitsi uuendada. Võrguvea korral näitab äpp valitud asula ja kuupäeva kohta salvestatud ilmaandmeid märkega „Viimati laaditud prognoos“. Kui selle päeva andmed puuduvad, kuvatakse sellekohane teade. Külvikalender ja päevik töötavad edasi.
+- Kuue taime juures on allikaviidetega hooldusjuhised külvist saagini. Potitomati ja potikurgi kalkulaator kuvab valitud kuupäevast 10–14 päeva kaugusele jääva vahemiku.
+- Tomati ladva eemaldamise juhis arvestab kasvukuju ja viljakobarate arengut. Kuu järgi esile tõstetud päevad kannavad pärimusliku soovituse märget.
 - README-s on juhis, mille järgi saab teine inimene projekti käivitada.
 
 ## Arenduse märkmed
@@ -93,6 +98,11 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 
 - Salvesta valitud asula ja selle koordinaadid. Küsi prognoosi äpi avamisel ja esiplaanile naasmisel siis, kui viimasest edukast laadimisest on möödunud vähemalt tund, ning asula vahetamisel või käsitsi uuendamisel. Seo salvestatud prognoos asula ja kuupäevadega.
 - Kuva võimalik öökülm siis, kui kohaliku öö tunniprognoos näitab õhutemperatuuri 0 °C või alla selle. See on kohalikul prognoosil põhinev märkus. Külviaken ja kuufaasi soovitus jäävad kalendris nähtavale ka siis, kui valitud kuupäev jääb prognoosiperioodist välja.
+
+### Taimehooldus
+
+- Väetamine sõltub taime kasvufaasist, mulla viljakusest, kasvukohast ja valitud väetise pakendijuhisest. Potitaime kalkulaator on mõeldud juba väetatavale taimele. [Maaelu Teadmuskeskuse tomatijuhis](https://metk.agri.ee/uudised/tomatid-vajavad-tahelepanu-ja-hoolt) · [RHS-i tomatijuhis](https://www.rhs.org.uk/vegetables/tomatoes/grow-your-own) · [RHS-i kurgijuhis](https://www.rhs.org.uk/vegetables/cucumbers/grow-your-own).
+- Kuuvaade rakendab pärimuslikku kärpimise reeglit tomati ladva eemaldamisele. See soovitus eeldab, et taim on tööks valmis. Sama kuuvaade seob harvendamise ja rohimise kahaneva kuuga ning ümberistutamise kasvava kuuga. [Kuuaianduse pärimus](https://www.almanac.com/farming-moon) · [Teaduskirjanduse ülevaade](https://doi.org/10.3390/agronomy10070955).
 
 ### Agendid
 
