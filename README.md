@@ -4,6 +4,8 @@
 
 **Kuukülv** on eestikeelne külvikalender Androidi ja iOS-i telefonidele.
 
+Valisin iseseisvaks programmeerimisprojektiks Kuukülvi. Senise prototüübi seis ja kontrollide tulemused on kirjas [arenduslogis](logi.md). Järgmine ülevaatus on 26.11.2026.
+
 ### Prototüübi käivitamine
 
 ```sh
@@ -16,6 +18,14 @@ Ava Expo QR-kood telefonis, kasutades projektiga ühilduvat Expo Go versiooni. A
 Kalendris on 2025.–2031. aasta kuufaasid. Külviaknad on Eesti kevadisteks tingimusteks mõeldud ligikaudsed ajavahemikud. Meeldetuletus on vaikimisi välja lülitatud ja sisselülitamisel ajastatakse see plaanitud päevale kella 9.00 Eesti aja järgi.
 
 Arenduskontrollid käivituvad käskudega `npm run typecheck` ja `npm test`.
+
+Codex lisab pärast iga sisulist arendussammu, otsust ja kontrolli automaatselt sissekande faili [`./logi.md`](logi.md). Sissekannete vorm on kirjeldatud [arendusjuhistes](AGENTS.md).
+
+### Prototüübi ülevaatus
+
+1. Ava veebivaade käsuga `npm run web`. Vali kalendris redis ja näiteks mai alguse kuupäev. Päeva vaates näed avamaale külvi akent, kuu seisu ja soovituse allikaid.
+2. Ava külvipäevik, lisa tänaseks külviplaan ja märgi see tehtuks. Laadi leht uuesti ja vaata, kas kirje püsis alles vaates „Tehtud külvid“.
+3. Vali avavaates „Aiapäev“ asula ja vaata tänast ilma ning seitsme päeva prognoosi. Ava vaade „Hooldus“, vali tomat ja proovi potitaime väetamisaja arvutust.
 
 ## 2. Eesmärk
 
@@ -34,7 +44,7 @@ Rakendus on mõeldud Eesti koduaednikele, kes kasvatavad köögivilju aias, rõd
 5. **Leia järgmine kuufaasi järgi soovitatud külvipäev.** Rakendus tõstab sobivad päevad külviperioodis esile. Päeva avamisel näeb kasutaja kuufaasi ja soovituse põhjendust.
 6. **Lisa külv kalendrisse.** Salvesta valitud taime külvitegevus kuupäeva või terve külviperioodina äpi kalendrisse.
 7. **Saa külvimeeldetuletus.** Lülita kalendrikirje juures meeldetuletus sisse. Telefon teavitab valitud külviperioodi alguspäeval või ühele päevale planeeritud külvi kuupäeval.
-8. **Pea külvipäevikut.** Märgi planeeritud tegevus tehtuks või lisa külv tagantjärele. Vali taim ja tegelik külvikuupäev ning lisa soovi korral sordi nimi ja vabas vormis täpsustused, näiteks seemnete arv või külvikoht. Sordi ja täpsustused saab lisada juba külviplaani juurde. Kirjeid saab hiljem muuta või kustutada.
+8. **Pea külvipäevikut.** Märgi planeeritud tegevus tehtuks või lisa külv tagantjärele. Vaates „Tehtud külvid“ on kõik tehtud kirjed kuupäeva järgi, uuemad ees. Külviplaanid on eraldi vaates. Kirjele saab lisada sordi ja vabas vormis täpsustused, näiteks seemnete arvu või külvikoha, ning seda hiljem muuta või kustutada.
 9. **Kasuta külvikalendrit võrguühenduseta.** Vaata külviperioode ja kuusoovitusi andmetega kaetud päevadel ning lisa külvi- ja päevikukirjeid ka internetita.
 10. **Vaata kohalikku ilmaprognoosi.** Vali Eesti asula nime järgi. Kalendris näed tänast ilma ja seitsme päeva prognoosi koos õhutemperatuuri, sademete ja tuulega. Võimalikust öökülmast annab päeva vaates märku prognoosil põhinev märkus.
 11. **Vaata taimehooldust külvist saagini.** Vali taim ja loe, millal väetada ning mida jälgida kasvuperioodi eri etappides. Potitomati ja potikurgi puhul saab viimase väetamise järgi arvutada järgmise võimaliku ajavahemiku.

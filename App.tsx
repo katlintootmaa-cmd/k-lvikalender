@@ -24,6 +24,7 @@ const tabs = [
   { id: 'journal', name: 'Päevik', icon: 'book-outline' },
 ] as const;
 type Tab = typeof tabs[number]['id'];
+const journalTabs = [{ id: 'done', name: 'Tehtud külvid' }, { id: 'planned', name: 'Külviplaanid' }] as const;
 const moonGlyph: Record<string, string> = { 'New Moon': '○', 'First Quarter': '◑', 'Full Moon': '●', 'Last Quarter': '◐' };
 const fullDate: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
 
@@ -116,6 +117,7 @@ function Month({ day, crop, entries, select }: { day: Day; crop: Crop; entries: 
 function AppContent() {
   const [today, setToday] = useState(localDay);
   const [tab, setTab] = useState<Tab>('today');
+  const [journalKind, setJournalKind] = useState<Entry['kind']>('done');
   const [day, setDay] = useState(today);
   const [crop, setCrop] = useState(CROPS[0]);
   const [method, setMethod] = useState<Method | 'all'>('all');
@@ -167,6 +169,16 @@ function AppContent() {
     setTab('calendar');
   }
 
+  function selectJournalKind(kind: Entry['kind']) {
+    setDeleting(undefined);
+    setJournalKind(kind);
+  }
+
+  function openJournal(kind: Entry['kind'] = 'done') {
+    selectJournalKind(kind);
+    setTab('journal');
+  }
+
   async function persistJournal(next: Entry[]) {
     await write('journal', next);
     latestEntries.current = next;
@@ -195,7 +207,7 @@ function AppContent() {
       await sync().catch(() => { message = 'Kirje salvestatud. Meeldetuletuste uuendamine ebaõnnestus.'; });
       setNotice(message);
       setEditor(undefined);
-      setTab('journal');
+      openJournal(entry.kind);
     } finally {
       saving.current = false;
     }
@@ -229,6 +241,8 @@ function AppContent() {
   const upcomingWindow = nextWindow(crop, day);
   const suggestion = nextSuggestedDay(crop, day);
   const dayEntries = entries.filter((entry) => entry.day <= day && (entry.end ?? entry.day) >= day);
+  const journalEntries = entries.filter((entry) => entry.kind === journalKind)
+    .sort((a, b) => journalKind === 'planned' ? a.day.localeCompare(b.day) : b.day.localeCompare(a.day));
 
   return <SafeAreaView style={s.safe}>
     <View style={s.shell}>
@@ -239,7 +253,7 @@ function AppContent() {
         </View>
         <Text style={[s.small, { textAlign: 'right', flexShrink: 1 }]}>{formatDay(today, { weekday: 'short', day: 'numeric', month: 'short' })}</Text>
       </View>
-      <ScrollView key={tab} contentContainerStyle={s.page} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <ScrollView key={tab === 'journal' ? journalKind : tab} contentContainerStyle={s.page} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
         {!!notice && <View style={[s.card, s.between]}>
           <Text accessibilityLiveRegion="polite" style={[s.body, s.grow]}>{notice}</Text>
           <IconButton label="Sulge teade" icon="close" onPress={() => setNotice('')} />
@@ -305,53 +319,53 @@ function AppContent() {
             {dayEntries.map((entry) => <Text key={entry.id} style={s.body}>
               {[CROPS.find((item) => item.id === entry.cropId)?.name, entry.variety, entry.kind === 'done' ? 'Külvatud' : 'Plaanis'].filter(Boolean).join(' · ')}
             </Text>)}
-            <Button title="Ava päevik" onPress={() => setTab('journal')} />
+            <Button title="Ava päevik" onPress={() => openJournal(dayEntries.some(({ kind }) => kind === 'done') ? 'done' : 'planned')} />
           </View>}
         </>}
         {tab === 'care' && <CareView crop={crop} setCrop={setCrop} day={day} today={today} selectDay={setDay} openCalendar={() => setTab('calendar')} />}
         {tab === 'journal' && <>
           <Text accessibilityRole="header" style={s.heading}>Külvipäevik</Text>
+          <View accessibilityRole="tablist" accessibilityLabel="Külvipäeviku vaated" style={s.wrap}>
+            {journalTabs.map(({ id, name }) => <Pressable key={id} accessibilityRole="tab" aria-selected={journalKind === id}
+              onPress={() => selectJournalKind(id)} style={[s.button, journalKind === id && s.selected]}>
+              <Text style={s.buttonText}>{name}</Text>
+            </Pressable>)}
+          </View>
           <View style={s.wrap}>
             <Button title="Uus külvikanne" icon="add-outline" primary disabled={!ready} onPress={() => setEditor({ kind: 'done', cropId: crop.id, day: today })} />
             <Button title="Planeeri külv" icon="calendar-outline" disabled={!ready} onPress={() => setEditor({ kind: 'planned', cropId: crop.id, day: today })} />
           </View>
-          {(['planned', 'done'] as const).map((kind) => {
-            const matching = entries.filter((entry) => entry.kind === kind).sort((a, b) => kind === 'planned' ? a.day.localeCompare(b.day) : b.day.localeCompare(a.day));
-            return <View key={kind} style={s.section}>
-              <Text accessibilityRole="header" style={s.subheading}>{kind === 'planned' ? 'Plaanis' : 'Külvatud'}</Text>
-              {!matching.length && <Text style={s.small}>{kind === 'planned' ? 'Külviplaane veel pole.' : 'Külvikandeid veel pole.'}</Text>}
-              {matching.map((entry) => {
-                const plant = CROPS.find((item) => item.id === entry.cropId);
-                if (!plant) return null;
-                return <View key={entry.id} style={s.card}>
-                  <View style={s.item}>
-                    <View style={s.thumb}><Text style={s.emoji}>{plant.icon}</Text></View>
-                    <View style={s.grow}>
-                      <Text style={s.strong}>{plant.name} · {METHOD[plant.method]}</Text>
-                      {!!entry.variety && <Text style={s.small}>Sort · {entry.variety}</Text>}
-                      <Text style={s.small}>{formatDay(entry.day, { day: 'numeric', month: 'long', year: 'numeric' })}{entry.end ? ` – ${formatDay(entry.end)}` : ''}</Text>
-                    </View>
-                  </View>
-                  {entry.plannedDay && <Text style={s.small}>Algne plaan · {formatDay(entry.plannedDay)}</Text>}
-                  {!!entry.note && <Text style={s.body}>{entry.note}</Text>}
-                  {entry.reminder && <Text style={s.small}>{tallinnTime(entry.day, 9).getTime() > Date.now() ? 'Meeldetuletus kell 9 Eesti aja järgi' : 'Meeldetuletuse aeg möödunud'}</Text>}
-                  {deleting === entry.id ? <View style={s.wrap}>
-                    <Button title="Kinnita kustutamine" primary onPress={() => { void deleteEntry(entry.id); }} />
-                    <Button title="Loobu" onPress={() => setDeleting(undefined)} />
-                  </View> : <View style={s.wrap}>
-                    {entry.kind === 'planned' && <Button title="Märgi külvatuks" icon="checkmark-outline" subtle onPress={() => setEditor({ kind: 'done', cropId: plant.id, day: today, entry, completing: true })} />}
-                    <Button title="Muuda" onPress={() => setEditor({ kind, cropId: plant.id, day: entry.day, entry })} />
-                    <Button title="Kustuta" onPress={() => setDeleting(entry.id)} />
-                  </View>}
-                </View>;
-              })}
+          {ready && !journalEntries.length && <Text style={s.small}>{journalKind === 'done' ? 'Tehtud külve veel pole.' : 'Külviplaane veel pole.'}</Text>}
+          {journalEntries.map((entry) => {
+            const plant = CROPS.find((item) => item.id === entry.cropId);
+            if (!plant) return null;
+            return <View key={entry.id} style={s.card}>
+              <View style={s.item}>
+                <View style={s.thumb}><Text style={s.emoji}>{plant.icon}</Text></View>
+                <View style={s.grow}>
+                  <Text style={s.strong}>{plant.name} · {METHOD[plant.method]}</Text>
+                  {!!entry.variety && <Text style={s.small}>Sort · {entry.variety}</Text>}
+                  <Text style={s.small}>{formatDay(entry.day, { day: 'numeric', month: 'long', year: 'numeric' })}{entry.end ? ` – ${formatDay(entry.end)}` : ''}</Text>
+                </View>
+              </View>
+              {entry.plannedDay && <Text style={s.small}>Algne plaan · {formatDay(entry.plannedDay)}</Text>}
+              {!!entry.note && <Text style={s.body}>{entry.note}</Text>}
+              {entry.reminder && <Text style={s.small}>{tallinnTime(entry.day, 9).getTime() > Date.now() ? 'Meeldetuletus kell 9 Eesti aja järgi' : 'Meeldetuletuse aeg möödunud'}</Text>}
+              {deleting === entry.id ? <View style={s.wrap}>
+                <Button title="Kinnita kustutamine" primary onPress={() => { void deleteEntry(entry.id); }} />
+                <Button title="Loobu" onPress={() => setDeleting(undefined)} />
+              </View> : <View style={s.wrap}>
+                {entry.kind === 'planned' && <Button title="Märgi külvatuks" icon="checkmark-outline" subtle onPress={() => setEditor({ kind: 'done', cropId: plant.id, day: today, entry, completing: true })} />}
+                <Button title="Muuda" onPress={() => setEditor({ kind: entry.kind, cropId: plant.id, day: entry.day, entry })} />
+                <Button title="Kustuta" onPress={() => setDeleting(entry.id)} />
+              </View>}
             </View>;
           })}
         </>}
       </ScrollView>
       <View style={s.nav}>
         {tabs.map(({ id, name, icon }) => <Pressable key={id} accessibilityRole="tab" accessibilityState={{ selected: tab === id }}
-          onPress={() => setTab(id)} style={s.navItem}>
+          onPress={() => id === 'journal' ? openJournal() : setTab(id)} style={s.navItem}>
           <View style={[s.navIcon, tab === id && s.navActive]}><Ionicons name={icon as Icon} size={20} color={color.green} /></View>
           <Text style={[s.navText, tab === id && s.navTextActive]}>{name}</Text>
         </Pressable>)}
